@@ -1,15 +1,15 @@
 package com.example.keddit
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.keddit.common.adapter.NewsAdapter
+import com.example.keddit.model.RedditNewsItem
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -29,11 +29,26 @@ class FirstFragment : Fragment() {
         newList = view.findViewById(R.id.newsList)
         newList.setHasFixedSize(true)
         newList.layoutManager = LinearLayoutManager(context)
-        val a: SwipeRefreshLayout
+        init()
+
+        if (savedInstanceState == null) {
+            val news = (1..20).map {
+                RedditNewsItem(
+                    "author$it",
+                    "Title $it",
+                    it, // number of comments
+                    1457207701L - it * 200, // time
+                    "http://lorempixel.com/200/200/technics/$it",
+                    "url"
+                )
+            }
+            (newList.adapter as NewsAdapter).addNews(news)
+        }
     }
 
     fun init() {
         if (newList.adapter == null) {
+            newList.adapter = NewsAdapter()
         }
     }
 }

@@ -3,6 +3,7 @@ package com.example.keddit.common.adapter
 import android.view.ViewGroup
 import androidx.collection.SparseArrayCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.keddit.model.RedditNewsItem
 import com.example.keddit.model.ViewType
 
 class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -14,6 +15,7 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     init {
         delegateAdapters.put(AdapterConstants.LOADING, LoadingDelegateAdapter())
+        delegateAdapters.put(AdapterConstants.NEWS, NewsDelegateAdapter())
         items.add(loadingItem)
     }
 
@@ -29,5 +31,25 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
         return items[position].getViewType()
+    }
+
+    fun addNews(news: List<RedditNewsItem>) {
+        val pos = items.lastIndex
+        items.removeAt(pos)
+        items.addAll(pos, news)
+        notifyItemRangeInserted(pos, pos + news.size)
+    }
+
+    fun clearAndAddNews(news: List<RedditNewsItem>) {
+        items.clear()
+        items.addAll(news)
+        items.add(loadingItem)
+        notifyItemRangeInserted(0, items.size)
+    }
+
+    fun getNews(): List<RedditNewsItem> {
+        return items.filter {
+            it.getViewType() == AdapterConstants.NEWS
+        }.map { it as RedditNewsItem }
     }
 }
