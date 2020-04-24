@@ -27,7 +27,6 @@ class NewsDelegateAdapter: ViewTypeDelegateAdapter {
     class NewsHolder(val binding: NewsItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: RedditNewsItem) {
             binding.news = item
-            binding.executePendingBindings()
         }
     }
 }

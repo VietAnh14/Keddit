@@ -38,7 +38,7 @@ class FirstFragment : Fragment() {
                     "Title $it",
                     it, // number of comments
                     1457207701L - it * 200, // time
-                    "http://lorempixel.com/200/200/technics/$it",
+                    "https://placedog.net/200/200",
                     "url"
                 )
             }

@@ -26,7 +26,8 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        delegateAdapters.get(position)?.onBindViewHolder(holder, items[position])
+        val adapterType = items.get(position).getViewType()
+        delegateAdapters.get(adapterType)!!.onBindViewHolder(holder, items.get(position))
     }
 
     override fun getItemViewType(position: Int): Int {
